@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpotCheck Mobile App — Official User & Technical Manual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B1512;
+      --bg-alt: #0F1C18;
+      --surface: #12211C;
+      --surface-card: #152620;
+      --line: rgba(237, 245, 240, 0.10);
+      --line-strong: rgba(237, 245, 240, 0.18);
+      --text: #EEF4F0;
+      --text-dim: #A9BDB3;
+      --text-faint: #6E8479;
+      --accent: #39D98A;
+      --accent-dim: #1F7A52;
+      --amber: #E3A64A;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Sticky Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(11, 21, 18, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-logo-img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(57, 217, 138, 0.25));
+    }
+
+    .brand-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .brand-tag {
+      font-size: 0.72rem;
+      background: rgba(57, 217, 138, 0.12);
+      color: var(--accent);
+      padding: 2px 10px;
+      border-radius: 9999px;
+      font-weight: 600;
+      border: 1px solid rgba(57, 217, 138, 0.3);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-home {
+      background: rgba(237, 245, 240, 0.08);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+    }
+    .btn-home:hover {
+      background: rgba(237, 245, 240, 0.14);
+      color: #fff;
+    }
+
+    .btn-pdf-dl {
+      background: rgba(57, 217, 138, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(57, 217, 138, 0.35);
+    }
+    .btn-pdf-dl:hover {
+      background: var(--accent);
+      color: #06140F;
+    }
+
+    .btn-print {
+      background: var(--accent);
+      color: #06140F;
+      border: none;
+      font-weight: 700;
+    }
+    .btn-print:hover {
+      background: #4fe49b;
+      transform: translateY(-1px);
+    }
+
+    /* Layout */
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2.25rem;
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      position: sticky;
+      top: 5rem;
+      height: fit-content;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+      background: var(--surface);
+      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar-heading {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-link {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+      font-weight: 500;
+    }
+
+    .sidebar-link:hover {
+      color: var(--accent);
+      background: rgba(57, 217, 138, 0.10);
+    }
+
+    /* Main Container */
+    .main-content {
+      min-width: 0;
+    }
+
+    /* Cover Page */
+    .cover-page {
+      background: linear-gradient(145deg, #0F1C18 0%, #12211C 100%);
+      border: 1.5px solid rgba(57, 217, 138, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover-page::after {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(57, 217, 138, 0.15) 0%, rgba(57, 217, 138, 0) 70%);
+      border-radius: 50%;
+    }
+
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(57, 217, 138, 0.12);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      border: 1px solid rgba(57, 217, 138, 0.3);
+    }
+
+    .doc-ref {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+    }
+
+    .cover-hero-logo {
+      height: 64px;
+      width: auto;
+      object-fit: contain;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 4px 12px rgba(57, 217, 138, 0.3));
+    }
+
+    .cover-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.02em;
+    }
+
+    .cover-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      max-width: 760px;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    /* Metadata Grid */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding: 1.25rem;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-faint);
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .meta-val {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Spec Highlight Grid */
+    .specs-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .spec-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spec-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+
+    .spec-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* TOC Printable Page */
+    .toc-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .toc-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2rem;
+    }
+
+    .toc-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 6px 0;
+      border-bottom: 1px dotted rgba(237, 245, 240, 0.15);
+      transition: color 0.15s ease;
+    }
+
+    .toc-entry:hover {
+      color: var(--accent);
+    }
+
+    .toc-page-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 0.82rem;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(57, 217, 138, 0.12);
+      border: 1px solid rgba(57, 217, 138, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .section-desc {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* Steps */
+    .step-box {
+      margin-bottom: 2rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .step-box:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.85rem;
+    }
+
+    .step-num {
+      background: var(--accent);
+      color: #06140F;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    .step-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      margin-top: 0.85rem;
+    }
+
+    .step-grid-dual {
+      display: grid;
+      grid-template-columns: 210px 210px 1fr;
+      gap: 1.25rem;
+      align-items: start;
+      margin-top: 0.85rem;
+    }
+
+    /* Phone Mockups */
+    .phone-mockup {
+      background: #060E0B;
+      border-radius: 20px;
+      padding: 6px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+      border: 2px solid rgba(57, 217, 138, 0.25);
+      max-width: 220px;
+      position: relative;
+    }
+
+    .phone-notch {
+      width: 50px;
+      height: 4px;
+      background: #1B352B;
+      border-radius: 9999px;
+      margin: 3px auto 6px auto;
+    }
+
+    .phone-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+      background: #000;
+    }
+
+    .phone-caption {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    /* Content styling */
+    .step-content p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+
+    .step-content strong {
+      color: var(--text);
+    }
+
+    .step-content ul, .step-content ol {
+      margin-left: 1.25rem;
+      margin-bottom: 0.85rem;
+      color: var(--text-dim);
+      font-size: 0.92rem;
+    }
+
+    .step-content li {
+      margin-bottom: 0.4rem;
+    }
+
+    .step-content code {
+      background: rgba(237, 245, 240, 0.08);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      border: 1px solid var(--line);
+    }
+
+    /* Callout Alerts */
+    .callout {
+      padding: 0.9rem 1.2rem;
+      border-radius: var(--radius-sm);
+      margin: 0.9rem 0;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .callout-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .callout-tip, .callout-security {
+      background: rgba(57, 217, 138, 0.08);
+      border: 1px solid rgba(57, 217, 138, 0.28);
+      color: var(--text);
+    }
+
+    .callout-tip .callout-title, .callout-security .callout-title {
+      color: var(--accent);
+    }
+
+    .callout-warning {
+      background: rgba(227, 166, 74, 0.08);
+      border: 1px solid rgba(227, 166, 74, 0.3);
+      color: var(--text);
+    }
+
+    .callout-warning .callout-title {
+      color: var(--amber);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      margin: 1rem 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    thead {
+      background: var(--bg-alt);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    th, td {
+      padding: 9px 13px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody tr:hover {
+      background: rgba(237, 245, 240, 0.03);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-bronze { background: rgba(227, 166, 74, 0.2); color: #f6c884; border: 1px solid rgba(227, 166, 74, 0.4); }
+    .badge-silver { background: rgba(237, 245, 240, 0.15); color: #EEF4F0; border: 1px solid var(--line-strong); }
+    .badge-gold { background: rgba(250, 204, 21, 0.2); color: #fde047; border: 1px solid rgba(250, 204, 21, 0.4); }
+    .badge-expert { background: rgba(57, 217, 138, 0.2); color: var(--accent); border: 1px solid rgba(57, 217, 138, 0.4); }
+
+    /* FAQ item */
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.65rem;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 0.9rem 1.2rem;
+      font-weight: 700;
+      font-size: 0.94rem;
+      color: var(--text);
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .faq-answer {
+      padding: 0.9rem 1.2rem;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: var(--text-faint);
+      font-size: 0.85rem;
+    }
+
+    /* ==========================================================================
+       Print & PDF Specific Page Styles
+       ========================================================================== */
+    @page {
+      size: A4 portrait;
+      margin: 12mm 10mm 12mm 10mm;
+    }
+
+    @media print {
+      header, .sidebar, .btn-action, .btn-print {
+        display: none !important;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      body {
+        background: #0B1512 !important;
+        color: #EEF4F0 !important;
+      }
+
+      .layout {
+        display: block !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+
+      /* Clean Cover Page for Print */
+      .cover-page {
+        page-break-after: always !important;
+        break-after: page !important;
+        min-height: 94vh !important;
+        border: 2px solid #39D98A !important;
+        padding: 3.5rem 2.5rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        background: #0F1C18 !important;
+      }
+
+      .toc-card {
+        page-break-after: always !important;
+        break-after: page !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(237, 245, 240, 0.15) !important;
+        background: #12211C !important;
+      }
+
+      .section-card {
+        page-break-before: auto !important;
+        border: 1px solid rgba(237, 245, 240, 0.15) !important;
+        box-shadow: none !important;
+        padding: 1.25rem !important;
+        margin-bottom: 1.5rem !important;
+        background: #12211C !important;
+      }
+
+      /* Prevent ugly half-splits */
+      .step-box {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        margin-bottom: 1.25rem !important;
+        padding-bottom: 1rem !important;
+      }
+
+      .phone-mockup {
+        max-width: 195px !important;
+        border: 2px solid #1B352B !important;
+        border-radius: 16px !important;
+        padding: 5px !important;
+        box-shadow: none !important;
+        background: #060E0B !important;
+      }
+
+      .phone-img {
+        border-radius: 11px !important;
+      }
+
+      .step-grid {
+        grid-template-columns: 195px 1fr !important;
+        gap: 1.15rem !important;
+      }
+
+      .step-grid-dual {
+        grid-template-columns: 175px 175px 1fr !important;
+        gap: 0.85rem !important;
+      }
+
+      .callout {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+
+      .table-container {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+
+      .faq-item {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+
+    /* Responsive for small screens */
+    @media (max-width: 992px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .step-grid-dual {
+        grid-template-columns: 1fr 1fr;
+      }
+      .meta-grid, .specs-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .step-grid, .step-grid-dual {
+        grid-template-columns: 1fr;
+      }
+      .phone-mockup {
+        margin: 0 auto;
+      }
+      .cover-title {
+        font-size: 1.85rem;
+      }
+      .meta-grid, .specs-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <!-- Top Sticky Navigation -->
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="brand" title="Return to SpotCheck Website Home">
+        <img src="Logo.png" alt="SpotCheck Logo" class="brand-logo-img">
+        <div>
+          <span class="brand-title">SpotCheck</span>
+          <span class="brand-tag">User Manual v2.4</span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <a href="index.html" class="btn-action btn-home">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to Home
+        </a>
+        <a href="SpotCheck_User_Manual.pdf" download="SpotCheck_User_Manual.pdf" class="btn-action btn-pdf-dl">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download PDF
+        </a>
+        <button class="btn-action btn-print" onclick="window.print()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print / PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- Sidebar Navigation for Web View -->
+    <aside class="sidebar">
+      <div class="sidebar-heading">Manual Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="#cover" class="sidebar-link">Title &amp; Specifications</a></li>
+        <li><a href="#toc" class="sidebar-link">Table of Contents</a></li>
+        <li><a href="#installation" class="sidebar-link">1. APK Installation</a></li>
+        <li><a href="#onboarding" class="sidebar-link">2. 4-Step Onboarding</a></li>
+        <li><a href="#map-dashboard" class="sidebar-link">3. Live GPS Map</a></li>
+        <li><a href="#ask-locals" class="sidebar-link">4. Asking Nearby Locals</a></li>
+        <li><a href="#post-pulse" class="sidebar-link">5. Posting Live Updates</a></li>
+        <li><a href="#feeds" class="sidebar-link">6. Community Feeds</a></li>
+        <li><a href="#leaderboard" class="sidebar-link">7. Experts Leaderboard</a></li>
+        <li><a href="#profile-settings" class="sidebar-link">8. Profile &amp; Server</a></li>
+        <li><a href="#faqs" class="sidebar-link">9. FAQs &amp; Support</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- Official Cover Page -->
+      <section class="cover-page" id="cover">
+        <div>
+          <div class="cover-top">
+            <div class="cover-badge">Official Technical Documentation</div>
+            <div class="doc-ref">DOC-ID: SC-MAN-2026-V2</div>
+          </div>
+          <img src="Logo.png" alt="SpotCheck Official Logo" class="cover-hero-logo">
+          <h1 class="cover-title">SpotCheck Mobile App<br>Official User Manual</h1>
+          <p class="cover-subtitle">
+            Real-Time Hyper-Local Travel Intelligence from Verified Native Residents. A complete guide to APK installation, bot-free onboarding, GPS telemetry, live camera proof verification, and community gamification.
+          </p>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">App Release</span>
+              <span class="meta-val">v2.4.0 (Debug APK)</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Architecture</span>
+              <span class="meta-val">Android Kotlin / Compose</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Backend Engine</span>
+              <span class="meta-val">FastAPI + PostgreSQL</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Date Published</span>
+              <span class="meta-val">October 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="specs-row">
+          <div class="spec-card">
+            <span class="spec-num">25 km</span>
+            <span class="spec-label">Geofence Radius</span>
+          </div>
+          <div class="spec-card">
+            <span class="spec-num">100% Live</span>
+            <span class="spec-label">Camera-Only Proof</span>
+          </div>
+          <div class="spec-card">
+            <span class="spec-num">±9m</span>
+            <span class="spec-label">GPS Precision</span>
+          </div>
+          <div class="spec-card">
+            <span class="spec-num">Offline</span>
+            <span class="spec-label">15 km Tile Cache</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Table of Contents Page -->
+      <section class="toc-card" id="toc">
+        <h2 class="toc-title">📋 Table of Contents</h2>
+        <div class="toc-grid">
+          <div>
+            <a href="#installation" class="toc-entry">
+              <span>Part 1: Downloading &amp; Installing the APK</span>
+              <span class="toc-page-num">Screenshots 1 – 4</span>
+            </a>
+            <a href="#onboarding" class="toc-entry">
+              <span>Part 2: Account Creation &amp; 4-Step Onboarding</span>
+              <span class="toc-page-num">Screenshots 5 – 10</span>
+            </a>
+            <a href="#map-dashboard" class="toc-entry">
+              <span>Part 3: Exploring the Live Map &amp; Spot Sheet</span>
+              <span class="toc-page-num">Screenshots 11 – 12</span>
+            </a>
+            <a href="#ask-locals" class="toc-entry">
+              <span>Part 4: Asking Nearby Locals (25 km Geofence)</span>
+              <span class="toc-page-num">Screenshot 13</span>
+            </a>
+          </div>
+          <div>
+            <a href="#post-pulse" class="toc-entry">
+              <span>Part 5: Posting Live Native Pulse Updates</span>
+              <span class="toc-page-num">Screenshot 14</span>
+            </a>
+            <a href="#feeds" class="toc-entry">
+              <span>Part 6: Browsing Feeds &amp; Community Intelligence</span>
+              <span class="toc-page-num">Screenshots 15 – 16</span>
+            </a>
+            <a href="#leaderboard" class="toc-entry">
+              <span>Part 7: Local Experts &amp; Gamification Leaderboard</span>
+              <span class="toc-page-num">Screenshot 17</span>
+            </a>
+            <a href="#profile-settings" class="toc-entry">
+              <span>Part 8: Profile Management &amp; Server Settings</span>
+              <span class="toc-page-num">Screenshot 18</span>
+            </a>
+            <a href="#faqs" class="toc-entry">
+              <span>Part 9: Frequently Asked Questions &amp; Support</span>
+              <span class="toc-page-num">Reference</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 1: Installation -->
+      <section class="section-card" id="installation">
+        <div class="section-header">
+          <div class="section-icon">📥</div>
+          <div>
+            <h2 class="section-title">Part 1: Downloading &amp; Installing the APK</h2>
+            <p class="section-desc">Visual procedure for installing SpotCheck on Android devices without Google Play Store dependencies.</p>
+          </div>
+        </div>
+
+        <!-- 1.1 -->
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Step 1.1</span>
+            <h3 class="step-title">Download Completion &amp; Open Prompt</h3>
+          </div>
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/1.jpeg" alt="Download prompt" class="phone-img">
+              <div class="phone-caption">Screenshot 1: Download File</div>
+            </div>
+            <div class="step-content">
+              <p>Once you download <code>spotcheck-debug.apk</code> (approx 20 MB) to your Android device, the system notification drawer indicates completion:</p>
+              <ul>
+                <li>Tap <strong>"Open file"</strong> to launch the installation wizard.</li>
+                <li>If prompted with <em>"Install unknown apps"</em>, grant permission to Chrome or your File Manager in Android Settings.</li>
+              </ul>
+              <div class="callout callout-security">
+                <span class="callout-icon">🛡️</span>
+                <div>
+                  <div class="callout-title">Android Security Sandbox Notice</div>
+                  <div>Android issues a standard prompt for any direct APK. SpotCheck runs in a sandboxed runtime and requests zero sensitive SMS or contact permissions.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.2 -->
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Step 1.2</span>
+            <h3 class="step-title">Confirm Package Installation</h3>
+          </div>
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/2.jpeg" alt="Package installer prompt" class="phone-img">
+              <div class="phone-caption">Screenshot 2: Package Installer</div>
+            </div>
+            <div class="step-content">
+              <p>The Android Package Installer asks: <em>"Do you want to install this app?"</em>.</p>
+              <ul>
+                <li>Confirm the app name displays as <strong>SpotCheck</strong>.</li>
+                <li>Tap <strong>"Install"</strong> in the bottom right corner to unpack the application binary.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.3 & 1.4 -->
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Step 1.3 &amp; 1.4</span>
+            <h3 class="step-title">Google Play Protect Verification</h3>
+          </div>
+          <div class="step-grid-dual">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/3.jpeg" alt="Play Protect scan dialog" class="phone-img">
+              <div class="phone-caption">Screenshot 3: Play Protect Scan</div>
+            </div>
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/4.jpeg" alt="Play Protect safe confirmation" class="phone-img">
+              <div class="phone-caption">Screenshot 4: Clean Scan Passed</div>
+            </div>
+            <div class="step-content">
+              <p>Google Play Protect analyzes the APK package signature:</p>
+              <ul>
+                <li>Select <strong>"Scan app"</strong> (or <em>Install without scanning</em>).</li>
+                <li>Play Protect verifies the app's cryptographic signature and confirms clean status.</li>
+                <li>Tap the green <strong>"Install"</strong> button. The SpotCheck icon will appear in your application launcher.</li>
+              </ul>
+              <div class="callout callout-tip">
+                <span class="callout-icon">💡</span>
+                <div>
+                  <div class="callout-title">Fast Launch</div>
+                  <div>Upon install completion, tap <strong>"Open"</strong> to launch straight into onboarding.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 2: Onboarding -->
+      <section class="section-card" id="onboarding">
+        <div class="section-header">
+          <div class="section-icon">🔐</div>
+          <div>
+            <h2 class="section-title">Part 2: Account Creation &amp; 4-Step Onboarding</h2>
+            <p class="section-desc">SpotCheck uses high-precision location and verified email credentials to ensure genuine local presence.</p>
+          </div>
+        </div>
+
+        <!-- 2.1 -->
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Welcome</span>
+            <h3 class="step-title">Sign In &amp; Account Portal</h3>
+          </div>
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/5.jpeg" alt="Welcome Login Screen" class="phone-img">
+              <div class="phone-caption">Screenshot 5: Welcome Screen</div>
+            </div>
+            <div class="step-content">
+              <p>On first launch, SpotCheck welcomes you with a streamlined sign-in portal:</p>
+              <ul>
+                <li><strong>Existing Users:</strong> Enter registered Email Address and Password, then tap <strong>"Sign In"</strong>.</li>
+                <li><strong>New Users:</strong> Tap the <strong>"Create Account"</strong> link at the bottom to begin the 4-step registration flow.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2.2 -->
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Step 1 of 4</span>
+            <h3 class="step-title">Personal Identification Details</h3>
+          </div>
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/6.jpeg" alt="Personal details screen" class="phone-img">
+              <div class="phone-caption">Screenshot 6: Personal Details</div>
+            </div>
+            <div class="step-content">
+              <p>Provide your identity details for the community:</p>
+              <ul>
+                <li><strong>Full Name:</strong> Enter your real name (e.g. <em>Narain Karthik J</em>). This name represents your reputation on verified answers.</li>
+                <li><strong>Phone Number:</strong> Enter your 10-digit mobile number.</li>
+                <li>Tap <strong>"Continue"</strong> to advance to email verification.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2.3 -->
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Step 2 of 4</span>
+            <h3 class="step-title">Email Verification via OTP</h3>
+          </div>
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/7.jpeg" alt="Email OTP Verification" class="phone-img">
+              <div class="phone-caption">Screenshot 7: Email OTP</div>
+            </div>
+            <div class="step-content">
+              <p>To eliminate bots and spam accounts, email addresses are verified with a 6-digit OTP:</p>
+              <ol>
+                <li>Input your active Email Address.</li>
+                <li>Tap <strong>"Send Verification Code"</strong>.</li>
+                <li>Check your inbox and enter the 6-digit PIN in the <strong>OTP Code</strong> box.</li>
+                <li>Tap <strong>"Continue"</strong>.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2.4 & 2.5 -->
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Step 3 of 4</span>
+            <h3 class="step-title">GPS Permission &amp; Real-Time Geocoding</h3>
+          </div>
+          <div class="step-grid-dual">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/8.jpeg" alt="Location permission prompt" class="phone-img">
+              <div class="phone-caption">Screenshot 8: GPS Permission</div>
+            </div>
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/9.jpeg" alt="Detected Location Screen" class="phone-img">
+              <div class="phone-caption">Screenshot 9: Detected Locality</div>
+            </div>
+            <div class="step-content">
+              <p>SpotCheck relies on true physical presence to deliver hyper-local travel intelligence:</p>
+              <ul>
+                <li>Choose <strong>"Precise"</strong> location and tap <strong>"While using the app"</strong>.</li>
+                <li>The reverse geocoding engine identifies your exact town/locality (e.g. <em>Semmipalayam</em>).</li>
+                <li>If you recently moved, tap <strong>"🔄 Detect GPS"</strong> to refresh hardware satellite coordinates.</li>
+                <li>Tap <strong>"Continue"</strong>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2.6 -->
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Step 4 of 4</span>
+            <h3 class="step-title">Password Security Enforcement</h3>
+          </div>
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/10.jpeg" alt="Password complexity screen" class="phone-img">
+              <div class="phone-caption">Screenshot 10: Step 4 Password</div>
+            </div>
+            <div class="step-content">
+              <p>Safeguard your account and accumulated reward points with an enforced password policy:</p>
+              <ul>
+                <li>At least 5 characters in length</li>
+                <li>At least one uppercase character (A-Z)</li>
+                <li>At least one numeric digit (0-9)</li>
+                <li>At least one special character (!@#$%^&amp;*)</li>
+              </ul>
+              <p>All 4 rules must display green checkmarks. Tap <strong>"Register"</strong> to enter the live platform!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 3: Map Dashboard -->
+      <section class="section-card" id="map-dashboard">
+        <div class="section-header">
+          <div class="section-icon">🗺️</div>
+          <div>
+            <h2 class="section-title">Part 3: Exploring the Live Map &amp; Spot Sheet</h2>
+            <p class="section-desc">Interactive mapping, real-time weather telemetry, and high-reliability offline navigation caching.</p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Feature 3.1</span>
+            <h3 class="step-title">Interactive Map &amp; Weather Telemetry</h3>
+          </div>
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/11.jpeg" alt="Map Dashboard" class="phone-img">
+              <div class="phone-caption">Screenshot 11: Main Map Dashboard</div>
+            </div>
+            <div class="step-content">
+              <p>Your primary command center upon entering SpotCheck:</p>
+              <ul>
+                <li><strong>Blue Pulsing Dot:</strong> High-precision satellite GPS location.</li>
+                <li><strong>Destination Search:</strong> Type any town, landmark, or route to pre-inspect conditions before driving.</li>
+                <li><strong>Live Weather Bar:</strong> Instant meteorological data (e.g. <em>Mainly Clear ☀️ 33.1°C</em>) fetched for your active coordinates.</li>
+                <li><strong>Bottom Navigation:</strong> Switch seamlessly between Map, Feed, Natives Leaderboard, and Profile.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-header">
+            <span class="step-num">Feature 3.2</span>
+            <h3 class="step-title">Spot Action Sheet &amp; Offline Area Cache</h3>
+          </div>
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/12.jpeg" alt="Spot Action Sheet" class="phone-img">
+              <div class="phone-caption">Screenshot 12: Spot Action Sheet</div>
+            </div>
+            <div class="step-content">
+              <p>Tap anywhere on the map or tap the location bar to open the expanded Action Sheet:</p>
+              <ul>
+                <li><strong>Hardware Fix Readout:</strong> Shows real-time precision (e.g. <code>±9m</code>).</li>
+                <li><strong>📍 Google Maps:</strong> Handoff to external navigation apps for turn-by-turn driving directions.</li>
+                <li><strong>💾 Save Area Offline (15 km, ~15 MB):</strong> Pre-downloads vector tiles and road topologies into internal storage so you never lose your map in mountain ghats without cell reception.</li>
+                <li><strong>Actions:</strong> Quick triggers for <strong>"Ask Locals"</strong> and <strong>"Post Status"</strong>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 4: Ask Locals -->
+      <section class="section-card" id="ask-locals">
+        <div class="section-header">
+          <div class="section-icon">💬</div>
+          <div>
+            <h2 class="section-title">Part 4: Asking Nearby Locals (Hyper-Local Q&amp;A)</h2>
+            <p class="section-desc">Broadcast questions to verified residents living within a 25 km radius of your selected waypoint.</p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/13.jpeg" alt="Ask Locals Modal" class="phone-img">
+              <div class="phone-caption">Screenshot 13: Ask Locals Nearby</div>
+            </div>
+            <div class="step-content">
+              <p>When algorithmic mapping tools can't tell you if a road is flooded or a spot is crowded, ask locals:</p>
+              <ol>
+                <li>Tap <strong>"✏️ Ask Locals"</strong> on the Spot Sheet.</li>
+                <li>Verify your pinned location.</li>
+                <li><strong>Select Category:</strong>
+                  <ul>
+                    <li>☀️ <strong>Weather:</strong> Heavy rains, morning mist, landslide alerts.</li>
+                    <li>🚗 <strong>Road:</strong> Construction diversions, roadblocks, traffic bottlenecks.</li>
+                    <li>🛡️ <strong>Safety:</strong> Night safety, police check-posts.</li>
+                    <li>💎 <strong>Spot:</strong> Local food stalls, scenic viewpoints, parking status.</li>
+                    <li>💬 <strong>General:</strong> Temple timings, ticket lines, ATM availability.</li>
+                  </ul>
+                </li>
+                <li>Type your question clearly and tap <strong>"➤ Ask Locals"</strong>.</li>
+              </ol>
+              <div class="callout callout-tip">
+                <span class="callout-icon">⚡</span>
+                <div>
+                  <div class="callout-title">Intelligent Geofence Dispatch</div>
+                  <div>SpotCheck alerts all verified natives and active travelers within 25 km of your target waypoint. Responses typically arrive within minutes.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 5: Live Pulse -->
+      <section class="section-card" id="post-pulse">
+        <div class="section-header">
+          <div class="section-icon">📸</div>
+          <div>
+            <h2 class="section-title">Part 5: Posting Live Native Pulse Updates</h2>
+            <p class="section-desc">Anti-fraud photographic updates with hardware camera enforcement and satellite telemetry verification.</p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/14.jpeg" alt="Post live status update" class="phone-img">
+              <div class="phone-caption">Screenshot 14: Post Live Update</div>
+            </div>
+            <div class="step-content">
+              <p>Help fellow travelers by sharing verified road and crowd conditions:</p>
+              <ol>
+                <li>Tap <strong>"➕ Post Status"</strong> from the map.</li>
+                <li>Confirm your current location and select an update tag (Weather, Road, Crowd, Safety, Spot).</li>
+                <li>Write a brief condition note (e.g. <em>"Waterlogging cleared at bypass junction. Normal speed resumed."</em>).</li>
+                <li><strong>Take Live Camera Photo:</strong>
+                  <ul>
+                    <li>Tap <strong>"Take Live Photo"</strong> to activate the hardware camera.</li>
+                    <li>Snap the ground condition proof.</li>
+                  </ul>
+                </li>
+                <li>Tap <strong>"➤ Post Update"</strong> to publish. Your update is instantly visible to all users in the corridor.</li>
+              </ol>
+              <div class="callout callout-warning">
+                <span class="callout-icon">🚫</span>
+                <div>
+                  <div class="callout-title">Zero-Tolerance Anti-Fraud Policy</div>
+                  <div>Gallery uploads are strictly disabled in SpotCheck. Photos must be captured live through the camera lens with satellite telemetry matching your current location to eliminate fake internet reposts.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 6: Feeds -->
+      <section class="section-card" id="feeds">
+        <div class="section-header">
+          <div class="section-icon">📋</div>
+          <div>
+            <h2 class="section-title">Part 6: Browsing Feeds &amp; Community Intelligence</h2>
+            <p class="section-desc">Monitor live traveler questions and browse verified ground reports along your travel corridor.</p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-grid-dual">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/15.jpeg" alt="Local QA Tab" class="phone-img">
+              <div class="phone-caption">Screenshot 15: Local Q&amp;A Feed</div>
+            </div>
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/16.jpeg" alt="Native Pulse Feed" class="phone-img">
+              <div class="phone-caption">Screenshot 16: Native Pulse Feed</div>
+            </div>
+            <div class="step-content">
+              <p>Tap the <strong>"Feed"</strong> icon in the bottom navigation bar to open the dual-stream community board:</p>
+              <ul>
+                <li><strong>Local Q&amp;A Tab (Left):</strong>
+                  <ul>
+                    <li>Review questions asked by nearby travelers.</li>
+                    <li>Locals can tap to reply and earn +5 reward points for verified answers.</li>
+                  </ul>
+                </li>
+                <li><strong>Native Pulse Feed (Right):</strong>
+                  <ul>
+                    <li>Real-time chronological stream of live condition reports and verified camera photos.</li>
+                    <li>Upvote helpful posts or flag outdated hazards.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 7: Gamification -->
+      <section class="section-card" id="leaderboard">
+        <div class="section-header">
+          <div class="section-icon">🏆</div>
+          <div>
+            <h2 class="section-title">Part 7: Local Experts &amp; Gamification Leaderboard</h2>
+            <p class="section-desc">Transparent reward points and tier badges celebrating reliable community contributors.</p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/17.jpeg" alt="Top Local Experts Leaderboard" class="phone-img">
+              <div class="phone-caption">Screenshot 17: Leaderboard</div>
+            </div>
+            <div class="step-content">
+              <p>Tap the <strong>"Natives"</strong> tab to inspect top regional contributors:</p>
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Action</th>
+                      <th>Points</th>
+                      <th>Effect</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Verified Answer Provided</td>
+                      <td><strong style="color:var(--primary);">+5 pts</strong></td>
+                      <td>Fast-track rank boost</td>
+                    </tr>
+                    <tr>
+                      <td>Live Pulse Camera Post</td>
+                      <td><strong style="color:var(--primary);">+3 pts</strong></td>
+                      <td>Community credit reward</td>
+                    </tr>
+                    <tr>
+                      <td>Misleading / Flagged Post</td>
+                      <td><strong style="color:#ef4444;">-3 pts</strong></td>
+                      <td>Reputation penalty</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4 style="margin-top:0.75rem; margin-bottom:0.4rem; font-size:0.95rem;">Contributor Tier Progression</h4>
+              <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                <span class="badge badge-bronze">Bronze (0–100 pts)</span>
+                <span class="badge badge-silver">Silver (101–500 pts)</span>
+                <span class="badge badge-gold">Gold (501–1,499 pts)</span>
+                <span class="badge badge-expert">Local Expert (1,500+ pts)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Part 8: Profile & Settings -->
+      <section class="section-card" id="profile-settings">
+        <div class="section-header">
+          <div class="section-icon">⚙️</div>
+          <div>
+            <h2 class="section-title">Part 8: Profile Management &amp; Server Settings</h2>
+            <p class="section-desc">Manage account identity, inspect your credit balance ledger, and switch backend endpoints.</p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-grid">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <img src="Screenshot/18.jpeg" alt="Profile and Server Settings" class="phone-img">
+              <div class="phone-caption">Screenshot 18: Profile Screen</div>
+            </div>
+            <div class="step-content">
+              <p>Tap the <strong>"Profile"</strong> tab on the navigation bar:</p>
+              <ol>
+                <li><strong>Native Profile Card:</strong> Displays avatar, full name, registered email address, and active community tier.</li>
+                <li><strong>Points Balance:</strong> Live tally of total credits earned from answers and pulse updates.</li>
+                <li><strong>FastAPI Server URL:</strong>
+                  <ul>
+                    <li>Easily switch between development tunnels (e.g. <code>https://your-ngrok.ngrok-free.app</code>) and production cloud endpoints.</li>
+                    <li>Tap <strong>"Update URL"</strong> to apply changes without reinstalling the app.</li>
+                  </ul>
+                </li>
+                <li><strong>Credit History:</strong> Detailed audit ledger tracking timestamps and reasons for every point transaction.</li>
+                <li><strong>Sign Out:</strong> Safely terminates your session and clears local cached credentials.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQs -->
+      <section class="section-card" id="faqs">
+        <div class="section-header">
+          <div class="section-icon">❓</div>
+          <div>
+            <h2 class="section-title">Part 9: Frequently Asked Questions &amp; Support</h2>
+            <p class="section-desc">Solutions to common operational inquiries.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Why does SpotCheck require "Precise" location permission?</div>
+          <div class="faq-answer">SpotCheck operates on a strict 25 km hyper-local geofencing protocol. Precise GPS coordinates ensure questions and roadblock notifications are dispatched only to users physically present in that corridor.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Why can't I choose an image from my phone gallery?</div>
+          <div class="faq-answer">To maintain 100% authentic, tamper-free ground intelligence, SpotCheck strictly disables gallery uploads. All photo evidence must be captured directly through your phone's camera in real-time.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">How does the 15 km offline cache feature work?</div>
+          <div class="faq-answer">When you tap "Save Area Offline" in the Spot Action Sheet, the app downloads road geometries and vector map tiles within a 15 km perimeter (~15 MB). This ensures smooth navigation even if you lose signal in mountain ghats.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">How do I become a Verified Local Native?</div>
+          <div class="faq-answer">Contribute regularly by answering traveler questions with accurate local details and posting live status reports. Platform administrators can also verify reputable community members through the SpotCheck Web Admin Portal.</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p><strong>SpotCheck Mobile Travel Intelligence Platform</strong></p>
+    <p>Official Technical Documentation &bull; Document Reference: SC-MAN-2026-V2 &bull; © 2026 SpotCheck Team</p>
+  </footer>
+
+</body>
+</html>
